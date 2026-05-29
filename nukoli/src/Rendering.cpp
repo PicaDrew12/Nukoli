@@ -3,15 +3,24 @@
 
 void DrawPixel(int x, int y, uint8_t color) {
 	if (color != 16) {
-		if (x < WIDTH && y < HEIGHT) {
+		if (x < WIDTH && y < HEIGHT&& y>0) {
 			int index = y * WIDTH + x;
 			frameBuffer[index] = color;
 		}
 	}
 	
-	
 }
 
+
+//void DrawPixel(int x, int y, uint8_t color) {
+//	if (color != 16) {
+//
+//		int index = y * WIDTH + x;
+//		frameBuffer[index] = color;
+//		
+//	}
+//	
+//}
 
 void DrawSprite(Sprite& sprite, int x, int y, int scale, bool flipped) {
 	for (int i = 0; i < sprite.height * scale && y + i < HEIGHT; i++) {

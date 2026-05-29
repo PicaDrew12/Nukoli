@@ -13,5 +13,6 @@
 
 
 void init();
+void exec(Game& game);
 void run(Game& game);
 

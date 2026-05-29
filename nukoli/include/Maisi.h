@@ -12,6 +12,8 @@
 
 extern float defaultAmplitude;
 
+
+
 class SquareChannel : public sf::SoundStream {
 public:
     std::atomic<float> frequency{ 440.0f };
@@ -20,7 +22,7 @@ public:
 
 private:
     float phase = 0.0f;  
-    static constexpr int BUFFER_SIZE = 2048;
+    static constexpr int BUFFER_SIZE = 1024;
     std::vector<std::int16_t> buffer;
 
     bool onGetData(Chunk& data) override {  
@@ -58,7 +60,7 @@ public:
 
 private:
     float phase = 0.0f;
-    static constexpr int BUFFER_SIZE = 2048;
+    static constexpr int BUFFER_SIZE = 1024;
     std::vector<std::int16_t> buffer;
 
     bool onGetData(Chunk& data) override {
@@ -96,7 +98,7 @@ public:
 
 private:
     float phase = 0.0f;
-    static constexpr int BUFFER_SIZE = 2048;
+    static constexpr int BUFFER_SIZE = 1024;
     std::vector<std::int16_t> buffer;
 
     bool onGetData(Chunk& data) override {
@@ -134,7 +136,7 @@ public:
     std::atomic<bool>  triggered{ false }; // set true when a new note starts
 
 private:
-    static constexpr int BUFFER_SIZE = 2048;
+    static constexpr int BUFFER_SIZE = 1024;
     std::vector<std::int16_t> buffer;
     std::mt19937 rng{ std::random_device{}() };  // seeded once at construction
     std::uniform_real_distribution<float> dist{ -1.0f, 1.0f };

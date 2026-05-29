@@ -4,6 +4,14 @@
 #include <string>
 class Font;
 
+struct Config {
+	bool useIntro;
+	Config();
+};
+
+
+
+
 
 constexpr int WIDTH = 256;
 constexpr int HEIGHT = 256;
@@ -13,5 +21,4 @@ extern Color palette[16];
 extern Font defaultFont;
 constexpr uint8_t t = 16;
 extern const std::string assetsFolder;
-
-
+extern Config gameConfig;

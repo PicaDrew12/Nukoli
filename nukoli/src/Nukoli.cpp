@@ -4,6 +4,7 @@ uint8_t frameBuffer[SIZE] = {};
 Color palette[16];
 Font defaultFont;
 const std::string assetsFolder = "assets/";
+Config gameConfig;
 
 void populatePalette() {
     palette[0] = { 221, 207, 153 }; // #ddcf99
@@ -24,11 +25,21 @@ void populatePalette() {
     palette[15] = { 168, 138,  94 }; // #a88a5e
 }
 
+void playIntro(Game& game) {
+
+   int index = RunAfter(5, [&]() {exec(game); });
+   while (!timerMap[index]->isExpired) {
+
+   }
+    
+}
+
 void init() {
 	
 	populatePalette();
     defaultFont.loadFromFile("defaultFont.nf");
 	std::fill(std::begin(frameBuffer), std::end(frameBuffer), t);
+    
 }
 
 
@@ -56,30 +67,113 @@ void CreateScreenTexture(sf::Texture& screenTexture, Color palette[16]) {
 }
 
 
+
 void run(Game& game) {
     init();
+    
+    
+     exec(game);
+    
+    
+}
+
+//void exec(Game& game) {
+//    game.Start();
+//    sf::RenderWindow window(sf::VideoMode({ 1024, 1024 }), game.gameName);
+//    sf::Texture screen(sf::Vector2u(WIDTH, HEIGHT));
+//    sf::Clock clock;
+//    const float timestep = 1.f / 60.f;
+//
+//    auto makeLetterboxView = [&]() -> sf::View {
+//        sf::Vector2u winSize = window.getSize();
+//        float winW = static_cast<float>(winSize.x);
+//        float winH = static_cast<float>(winSize.y);
+//
+//        float size = std::min(winW, winH);
+//        float left = (winW - size) / 2.f / winW;
+//        float top = (winH - size) / 2.f / winH;
+//        float width = size / winW;
+//        float height = size / winH;
+//
+//        sf::View view(sf::FloatRect({ 0.f, 0.f }, { (float)WIDTH, (float)HEIGHT }));
+//        view.setViewport(sf::FloatRect({ left, top }, { width, height }));
+//        return view;
+//        };
+//
+//    sf::View gameView = makeLetterboxView();
+//
+//    while (window.isOpen())
+//    {
+//        sf::Time elapsed = clock.restart();
+//        float dt = elapsed.asSeconds();
+//
+//        while (const std::optional event = window.pollEvent())
+//        {
+//            if (event->is<sf::Event::Closed>())
+//                window.close();
+//
+//
+//            if (event->is<sf::Event::Resized>())
+//                gameView = makeLetterboxView();
+//        }
+//
+//        static float accumulator = 0;
+//        accumulator += dt;
+//        while (accumulator >= timestep)
+//        {
+//            //ClearFrameBuffer();
+//            UpdateAllTimers();
+//            game.Update();
+//            accumulator -= timestep;
+//        }
+//
+//        window.clear(sf::Color::Black);
+//        window.setView(gameView);
+//
+//        game.Draw();
+//        CreateScreenTexture(screen, palette);
+//        sf::Sprite screenSprite(screen);
+//        screenSprite.setScale({ (float)WIDTH / WIDTH, (float)HEIGHT / HEIGHT });
+//        window.draw(screenSprite);
+//
+//        window.display();
+//    }
+//}
+
+
+void exec(Game& game) {
     game.Start();
     sf::RenderWindow window(sf::VideoMode({ 1024, 1024 }), game.gameName);
     sf::Texture screen(sf::Vector2u(WIDTH, HEIGHT));
     sf::Clock clock;
     const float timestep = 1.f / 60.f;
 
+    // FPS counter state
+    sf::Font sysFont;
+    sysFont.openFromFile("arial.ttf"); // adjust path if needed
+    sf::Text fpsText(sysFont, "FPS: --", 18);
+    fpsText.setFillColor(sf::Color::White);
+    fpsText.setOutlineColor(sf::Color::Black);
+    fpsText.setOutlineThickness(1.f);
+
+    int   frameCount = 0;
+    float fpsTimer = 0.f;
+    float displayedFps = 0.f;
+    const float fpsUpdateInterval = 0.25f; // update readout every 250 ms
+
     auto makeLetterboxView = [&]() -> sf::View {
         sf::Vector2u winSize = window.getSize();
         float winW = static_cast<float>(winSize.x);
         float winH = static_cast<float>(winSize.y);
-
-        float size = std::min(winW, winH); 
+        float size = std::min(winW, winH);
         float left = (winW - size) / 2.f / winW;
         float top = (winH - size) / 2.f / winH;
         float width = size / winW;
         float height = size / winH;
-
         sf::View view(sf::FloatRect({ 0.f, 0.f }, { (float)WIDTH, (float)HEIGHT }));
         view.setViewport(sf::FloatRect({ left, top }, { width, height }));
         return view;
         };
-
     sf::View gameView = makeLetterboxView();
 
     while (window.isOpen())
@@ -87,36 +181,63 @@ void run(Game& game) {
         sf::Time elapsed = clock.restart();
         float dt = elapsed.asSeconds();
 
+        // --- FPS accumulation ---
+        frameCount++;
+        fpsTimer += dt;
+        if (fpsTimer >= fpsUpdateInterval) {
+            displayedFps = frameCount / fpsTimer;
+            frameCount = 0;
+            fpsTimer = 0.f;
+
+            // Build label and reposition to top-right
+            std::string label = "FPS: " + std::to_string(static_cast<int>(displayedFps));
+            fpsText.setString(label);
+            sf::FloatRect bounds = fpsText.getLocalBounds();
+            float margin = 6.f;
+            fpsText.setPosition({
+                window.getSize().x - bounds.size.x - bounds.position.x - margin,
+                margin
+                });
+        }
+
         while (const std::optional event = window.pollEvent())
         {
             if (event->is<sf::Event::Closed>())
                 window.close();
-
-           
-            if (event->is<sf::Event::Resized>())
+            if (event->is<sf::Event::Resized>()) {
                 gameView = makeLetterboxView();
+                // Reposition on resize too
+                sf::FloatRect bounds = fpsText.getLocalBounds();
+                float margin = 6.f;
+                fpsText.setPosition({
+                    window.getSize().x - bounds.size.x - bounds.position.x - margin,
+                    margin
+                    });
+            }
         }
 
         static float accumulator = 0;
         accumulator += dt;
         while (accumulator >= timestep)
         {
-            //ClearFrameBuffer();
             UpdateAllTimers();
             game.Update();
             accumulator -= timestep;
         }
 
-        window.clear(sf::Color::Black); 
+        window.clear(sf::Color::Black);
         window.setView(gameView);
 
         game.Draw();
         CreateScreenTexture(screen, palette);
         sf::Sprite screenSprite(screen);
-        screenSprite.setScale({ (float)WIDTH / WIDTH, (float)HEIGHT / HEIGHT }); 
+        screenSprite.setScale({ (float)WIDTH / WIDTH, (float)HEIGHT / HEIGHT });
         window.draw(screenSprite);
+
+        // Draw FPS in default (pixel/window) view so it's always screen-space
+        window.setView(window.getDefaultView());
+        window.draw(fpsText);
 
         window.display();
     }
 }
-
