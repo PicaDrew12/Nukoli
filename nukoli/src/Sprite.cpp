@@ -130,7 +130,7 @@ Sprite AnimatedCompositeSprite::getTileByIndex(int index, int frame) {
     return getFrameByIndex(frame).getTileByIndex(index);
 }
 
-Sprite& AnimatedCompositeSprite::getTilebyCoord(int x, int y, int frame) {
+Sprite AnimatedCompositeSprite::getTilebyCoord(int x, int y, int frame) {
     return getFrameByIndex(frame).getTilebyCoord(x, y);
 }
 

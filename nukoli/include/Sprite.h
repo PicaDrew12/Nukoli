@@ -58,7 +58,7 @@ public:
 	RepeatForeverTimer* timer;
 	void loadFromFile(std::string filename, float frameDuration =0.1f,bool looping =true);
 	Sprite getTileByIndex(int index,int frame);
-	Sprite& getTilebyCoord(int x, int y,int frame);			
+	Sprite getTilebyCoord(int x, int y,int frame);			
 	CompositeSprite getFrameByIndex(int index);				
 	void nextFrame();
 	void pause();
@@ -69,6 +69,6 @@ public:
 	AnimatedCompositeSprite(const AnimatedCompositeSprite& other);  
 	AnimatedCompositeSprite& operator=(const AnimatedCompositeSprite& other);
 	AnimatedCompositeSprite(AnimatedCompositeSprite&& other) noexcept;
-	AnimatedCompositeSprite& AnimatedCompositeSprite::operator=(AnimatedCompositeSprite&& other) noexcept;
+	AnimatedCompositeSprite& operator=(AnimatedCompositeSprite&& other) noexcept;
 };
 

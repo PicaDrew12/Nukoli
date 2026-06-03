@@ -77,13 +77,13 @@ class TestGame : public Game {
         ClearFrameBuffer(t);
         DrawSprite(cos,0,0);
         Print("Hello World", 3, 0, 0, 1,true,256,true);
-        DrawSprite(aba, abaX, abaY);
+        DrawSprite(aba, abaX, abaY,1,true);
         //std::cout << "j";
     }
 };
 
 
-void main() {
+int main() {
     TestGame testGame;
     testGame.gameName = "Nukoli";
     run(testGame);

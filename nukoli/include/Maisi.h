@@ -7,7 +7,7 @@
 #include "Global.h"
 #include<fstream>
 #include "Malia.h"
-
+#include <atomic>
 
 
 extern float defaultAmplitude;
