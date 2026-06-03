@@ -5,6 +5,8 @@ Color palette[16];
 Font defaultFont;
 const std::string assetsFolder = "assets/";
 Config gameConfig;
+int cameraX = 0;
+int cameraY = 0;
 
 void populatePalette() {
     palette[0] = { 221, 207, 153 }; // #ddcf99
@@ -14,6 +16,7 @@ void populatePalette() {
     palette[4] = { 119,  66,  81 }; // #774251
     palette[5] = { 75,  61,  68 }; // #4b3d44
     palette[6] = { 78,  84,  99 }; // #4e5463
+
     palette[7] = { 91, 125, 115 }; // #5b7d73
     palette[8] = { 142, 159, 125 }; // #8e9f7d
     palette[9] = { 100,  83,  85 }; // #645355

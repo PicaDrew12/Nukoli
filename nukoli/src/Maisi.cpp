@@ -141,6 +141,7 @@ void playNote(Note& note) {
 
 
 void SoundSource::loadFromFile(std::string filename) {
+
 	std::ifstream fin(assetsFolder+ "/sounds/" + filename);
 	int channelIndex = 0;
 	int value;
@@ -271,6 +272,8 @@ void initAudio() {
 	noiseChannel.play();
 
 }
+
+
 
 
 void SoundSource::reset() {

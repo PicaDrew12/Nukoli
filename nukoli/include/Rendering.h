@@ -4,6 +4,7 @@
 
 
 void DrawPixel(int x, int y, uint8_t color);
+void DrawPixelAbsolute(int x, int y, uint8_t color);
 
 void DrawSprite(Sprite& sprite,int x, int y, int scale=1, bool flipped = false);
 void DrawSprite(CompositeSprite& compositeSprite, int x, int y, int scale = 1, bool flipped = false);

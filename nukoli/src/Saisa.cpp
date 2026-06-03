@@ -34,7 +34,7 @@ void Font::testPrint(char c) {
 	}
 }
 
-void PrintChar(char c, uint8_t color, int x, int y, int fontSize) {
+void PrintChar(char c, uint8_t color, int x, int y, int fontSize, bool drawRelative) {
 	Font& font = defaultFont;
 	for (int i = 0; i < 12*fontSize; i++) {
 		for (int j = 0; j < 5*fontSize; j++) {
@@ -43,7 +43,14 @@ void PrintChar(char c, uint8_t color, int x, int y, int fontSize) {
 			uint8_t pixel = font.data[c][row][column];
 
 			if (pixel != 0) {
-				DrawPixel( x + j, y + i,color);
+				if (drawRelative) {
+					DrawPixel( x + j, y + i,color);
+				}
+				else {
+					DrawPixelAbsolute(x + j, y + i, color);
+				}
+				
+				
 			}
 
 		}
@@ -53,7 +60,7 @@ void PrintChar(char c, uint8_t color, int x, int y, int fontSize) {
 
 
 
-void Print(std::string text, uint8_t color, int x, int y, int fontSize, bool wrap, int maxLineLength) {
+void Print(std::string text, uint8_t color, int x, int y, int fontSize, bool wrap, int maxLineLength,bool drawRelative) {
 
 	int textWidth = text.size() * 6 * fontSize;
 
@@ -69,7 +76,7 @@ void Print(std::string text, uint8_t color, int x, int y, int fontSize, bool wra
 			i = 0;
 			length = x;
 		}
-		PrintChar(c, color, x + i * (5 * fontSize + fontSize), y, fontSize);
+		PrintChar(c, color, x + i * (5 * fontSize + fontSize), y, fontSize,drawRelative);
 		i++;
 		length += 5 * fontSize + fontSize;
 		

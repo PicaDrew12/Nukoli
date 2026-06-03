@@ -22,3 +22,5 @@ extern Font defaultFont;
 constexpr uint8_t t = 16;
 extern const std::string assetsFolder;
 extern Config gameConfig;
+extern int cameraX;
+extern int cameraY;

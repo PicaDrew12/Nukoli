@@ -17,7 +17,7 @@ public:
 
 };
 
-void PrintChar(char c,uint8_t color, int x, int y, int fontsize=1);
-void Print(std::string text, uint8_t color, int x, int y, int fontSize=1, bool wrap=true,int maxLineLength=256);
+void PrintChar(char c,uint8_t color, int x, int y, int fontsize=1,bool drawRelative =false);
+void Print(std::string text, uint8_t color, int x, int y, int fontSize=1, bool wrap=true,int maxLineLength=256,bool drawRelative=false);
 
 

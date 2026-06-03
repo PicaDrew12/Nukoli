@@ -1,15 +1,40 @@
 #include "Rendering.h"
 
-
-void DrawPixel(int x, int y, uint8_t color) {
-	if (color != 16) {
-		if (x < WIDTH && y < HEIGHT&& y>0) {
-			int index = y * WIDTH + x;
-			frameBuffer[index] = color;
-		}
-	}
-	
+void MoveCamera(int x, int y) {
+	cameraX = x;
+	cameraY = y;
 }
+
+void DrawPixel(int x, int y, uint8_t color)
+{
+	x -= cameraX;
+	y-= cameraY;
+	if (color == 16)
+		return;
+
+	if (x < 0 || x >= WIDTH ||
+		y < 0 || y >= HEIGHT)
+		return;
+
+	frameBuffer[y * WIDTH + x] = color;
+}
+
+void DrawPixelAbsolute(int x, int y, uint8_t color)
+{
+	
+	if (color == 16)
+		return;
+
+	if (x < 0 || x >= WIDTH ||
+		y < 0 || y >= HEIGHT)
+		return;
+
+	frameBuffer[y * WIDTH + x] = color;
+}
+
+
+
+
 
 
 //void DrawPixel(int x, int y, uint8_t color) {
@@ -23,7 +48,7 @@ void DrawPixel(int x, int y, uint8_t color) {
 //}
 
 void DrawSprite(Sprite& sprite, int x, int y, int scale, bool flipped) {
-	for (int i = 0; i < sprite.height * scale && y + i < HEIGHT; i++) {
+	for (int i = 0; i < sprite.height * scale /*&& y + i < HEIGHT*/; i++) {
 		int spriteRow = i / scale;
 		for (int j = 0; j < sprite.width * scale; j++) {
 			int spriteCol = j / scale;
@@ -48,7 +73,7 @@ void DrawSprite(CompositeSprite& compositeSprite, int x, int y, int scale, bool 
 		}
 	}
 }
-void DrawSprite(AnimatedCompositeSprite& animatedCompositeSprite, int x, int y, int scale, bool flipped) {
+void DrawSprite2(AnimatedCompositeSprite& animatedCompositeSprite, int x, int y, int scale, bool flipped) {
 	for (int i = 0; i < animatedCompositeSprite.tilesHigh; i++) {
 		for (int j = 0; j < animatedCompositeSprite.tilesWide; j++) {
 			Sprite currentSprite = animatedCompositeSprite.getTilebyCoord(j, i,animatedCompositeSprite.currentFrame);
@@ -62,7 +87,34 @@ void DrawSprite(AnimatedCompositeSprite& animatedCompositeSprite, int x, int y, 
 	}
 }
 
+void DrawSprite(AnimatedCompositeSprite& sprite, int posX, int posY, int scale, bool flipped) {
+	int frameSize = sprite.width * sprite.height; 
+	int start = frameSize * sprite.currentFrame;
 
+	int tilesWide = sprite.tilesWide;  
+	int tilesHigh = sprite.tilesHigh;
+
+	for (int local = 0; local < frameSize; local++) {
+		int idx = sprite.data[start + local];
+
+		if (idx == 16) continue; 
+
+		int tileIndex = local / 64;
+		int inTile = local % 64;
+
+		int tileX = tileIndex % tilesWide;
+		int tileY = tileIndex / tilesWide;
+
+		int px = inTile % 8;
+		int py = inTile / 8;
+
+		int drawX = posX + (tileX * 8 + px) * scale;
+		int drawY = posY + (tileY * 8 + py) * scale;
+
+	
+		DrawPixel(drawX, drawY, idx);
+	}
+}
 void ClearFrameBuffer(uint8_t color) {
 	for (int i = 0; i < SIZE; i++) {
 		frameBuffer[i] = color;
