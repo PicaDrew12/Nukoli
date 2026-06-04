@@ -87,33 +87,40 @@ void DrawSprite2(AnimatedCompositeSprite& animatedCompositeSprite, int x, int y,
 	}
 }
 
-void DrawSprite(AnimatedCompositeSprite& sprite, int posX, int posY, int scale, bool flipped) {
-	int frameSize = sprite.width * sprite.height; 
-	int start = frameSize * sprite.currentFrame;
+void DrawSprite(AnimatedCompositeSprite& sprite, int posX, int posY, int scale, bool flipped)
+{
+    int frameSize = sprite.width * sprite.height;
+    int start = frameSize * sprite.currentFrame;
 
-	int tilesWide = sprite.tilesWide;  
-	int tilesHigh = sprite.tilesHigh;
+    int tilesWide = sprite.tilesWide;
 
-	for (int local = 0; local < frameSize; local++) {
-		int idx = sprite.data[start + local];
+    for (int local = 0; local < frameSize; local++)
+    {
+        int idx = sprite.data[start + local];
 
-		if (idx == 16) continue; 
+        if (idx == 16)
+            continue;
 
-		int tileIndex = local / 64;
-		int inTile = local % 64;
+        int tileIndex = local / 64;
+        int inTile = local % 64;
 
-		int tileX = tileIndex % tilesWide;
-		int tileY = tileIndex / tilesWide;
+        int tileX = tileIndex % tilesWide;
+        int tileY = tileIndex / tilesWide;
 
-		int px = inTile % 8;
-		int py = inTile / 8;
+        int px = inTile % 8;
+        int py = inTile / 8;
 
-		int drawX = posX + (tileX * 8 + px) * scale;
-		int drawY = posY + (tileY * 8 + py) * scale;
+        int spriteX = tileX * 8 + px;
+        int spriteY = tileY * 8 + py;
 
-	
-		DrawPixel(drawX, drawY, idx);
-	}
+        if (flipped)
+            spriteX = sprite.width - 1 - spriteX;
+
+        int drawX = posX + spriteX * scale;
+        int drawY = posY + spriteY * scale;
+
+        DrawPixel(drawX, drawY, idx);
+    }
 }
 void ClearFrameBuffer(uint8_t color) {
 	for (int i = 0; i < SIZE; i++) {

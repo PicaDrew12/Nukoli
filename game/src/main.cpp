@@ -78,6 +78,7 @@ class TestGame : public Game {
         DrawSprite(cos,0,0);
         Print("Hello World", 3, 0, 0, 1,true,256,true);
         DrawSprite(aba, abaX, abaY,1,true);
+
         //std::cout << "j";
     }
 };
