@@ -107,4 +107,4 @@ enum class Key
     Pause,        //!< The Pause key
 };
 
-bool isKeyPressed(Key keyToCheck);
+bool isKeyHeld(Key keyToCheck);

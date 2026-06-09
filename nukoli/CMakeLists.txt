@@ -13,6 +13,7 @@ set(NUKOLI_SRC
     src/Sprite.cpp
     src/Malia.cpp
     src/Koge.cpp
+    src/Utils.cpp
     src/Maisi.cpp
 )
 

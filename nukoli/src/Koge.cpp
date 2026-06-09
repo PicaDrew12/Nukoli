@@ -1,6 +1,6 @@
 #include "Koge.h"
 
-bool isKeyPressed(Key keyToCheck) {
+bool isKeyHeld(Key keyToCheck) {
 
     sf::Keyboard::Key key = static_cast<sf::Keyboard::Key>(keyToCheck);
     if (sf::Keyboard::isKeyPressed(key)) {
