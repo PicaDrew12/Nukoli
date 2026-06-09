@@ -24,3 +24,4 @@ extern const std::string assetsFolder;
 extern Config gameConfig;
 extern int cameraX;
 extern int cameraY;
+

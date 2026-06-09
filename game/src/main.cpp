@@ -60,13 +60,13 @@ class TestGame : public Game {
         box2.y = s2.y;
         box2.width = s2.size;
         box2.height = s2.size;
-        if (isKeyHeld(Key::Up)) {
+        if (isKeyPressed(Key::Up)) {
             s2.y -= 1;
         }
         if (isKeyHeld(Key::Right)) {
             s2.x += 1;
         }
-        if (isKeyHeld(Key::Left)) {
+        if (isKeyReleased(Key::Left)) {
             s2.x -= 1;
         }
         if (isKeyHeld(Key::Down)) {
@@ -89,6 +89,7 @@ class TestGame : public Game {
         if (isColliding(box, box2)) {
             Print("Collision", 0, 10, 10, 1);
         }
+        Print(std::to_string(pressedKeys.size()), 0, 10, 10, 1);
        
         
         //std::cout << "j";

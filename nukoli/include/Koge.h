@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include<vector>
+#include<algorithm>
 
 enum class Key
 {
@@ -107,4 +109,13 @@ enum class Key
     Pause,        //!< The Pause key
 };
 
+
+extern std::vector<Key> pressedKeys;
+extern std::vector<Key> pressedKeysLastFrame;
+
 bool isKeyHeld(Key keyToCheck);
+bool isKeyPressed(Key keyToCheck);
+bool isKeyUp(Key keyToCheck);
+bool isKeyReleased(Key keyToCheck);
+void poolKeys();
+

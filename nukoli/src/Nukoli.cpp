@@ -144,6 +144,7 @@ void run(Game& game) {
 //}
 
 
+
 void exec(Game& game) {
     game.Start();
     sf::RenderWindow window(sf::VideoMode({ 1024, 1024 }), game.gameName);
@@ -226,6 +227,7 @@ void exec(Game& game) {
             UpdateAllTimers();
             game.Update();
             accumulator -= timestep;
+            poolKeys();
         }
 
         window.clear(sf::Color::Black);
