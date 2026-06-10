@@ -22,6 +22,7 @@ public:
 	int spriteCount = 0;
 	void loadFromFile(std::string filename);
 	Sprite getSpriteByIndex(int index);
+	
 
 
 	

@@ -1,7 +1,16 @@
 #include "Sprite.h"
 #include "Global.h"
+#include "Debug.h"
+
+bool canOpenFile(const std::string& path) {
+    std::ifstream file(path);
+    return file.is_open();
+}
 
 void Sprite::loadFromFile(std::string filename) {
+    if (!canOpenFile(filename)) {
+        Debug::Error("Can't open file: ", filename);
+    }
 	std::ifstream fin(assetsFolder + filename);
 	int color;
 	int i = 0;
@@ -38,6 +47,9 @@ Sprite::Sprite(std::string path) {
 
 
 void SpriteSheet::loadFromFile(std::string filename) {
+    if (!canOpenFile(assetsFolder + filename)) {
+        Debug::Error("Can't open file: ", filename);
+    }
     std::ifstream fin(assetsFolder + filename);
     int color;
     int i = 0;
@@ -45,9 +57,9 @@ void SpriteSheet::loadFromFile(std::string filename) {
         data.push_back(color);
         i++;
     }
-    spriteCount= i/64;
-
+    spriteCount = i / 64;
 }
+
 Sprite SpriteSheet::getSpriteByIndex(int index) {
     Sprite tempSprite;
     int j = 0;
@@ -57,6 +69,8 @@ Sprite SpriteSheet::getSpriteByIndex(int index) {
     }
     return tempSprite;
 }
+
+
 
 Sprite CompositeSprite::getTileByIndex(int index) {
     Sprite tempSprite;
@@ -74,6 +88,10 @@ Sprite CompositeSprite::getTilebyCoord(int x, int y) {
 }
 
 void CompositeSprite::loadFromFile(std::string filename) {
+    if (!canOpenFile(filename)) {
+        Debug::Error("Can't open file: ", filename);
+        
+    }
     std::ifstream fin(assetsFolder + filename);
     fin >> tilesWide;
     fin >> tilesHigh;
@@ -91,6 +109,9 @@ void CompositeSprite::loadFromFile(std::string filename) {
 
 
 void AnimatedCompositeSprite::loadFromFile(std::string filename, float frameDuration, bool looping) {
+    if (!canOpenFile(filename)) {
+        Debug::Error("Can't open file: ", filename);
+    }
     std::ifstream fin(assetsFolder + filename);
     fin >> tilesWide;
     fin >> tilesHigh;

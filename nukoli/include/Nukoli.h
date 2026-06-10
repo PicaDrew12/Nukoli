@@ -11,6 +11,8 @@
 #include "Saisa.h"
 #include "Utils.h"
 #include "Maisi.h"
+#include "Debug.h"
+#include "Map.h"
 
 
 void init();

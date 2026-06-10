@@ -30,15 +30,22 @@ BoundingBox box(100, 100, 5, 5);
 Square s2(100, 100, 50);
 BoundingBox box2(100, 100, 5, 5);
 class TestGame : public Game {
-
-
+    SpriteSheet ss;
+    
+    Map map;
   
     void Start() override {
-       
+        Sprite sp;
+        ss.loadFromFile("ss.ss");
+        map.spriteSheet = &ss;
+        map.loadFromFile("map.map");
+
+        //Debug::Log(map);
 
     }
     
     void Update() override {
+
         box.x = s1.x;
         box.y = s1.y;
         box.width = s1.size;
@@ -90,7 +97,7 @@ class TestGame : public Game {
             Print("Collision", 0, 10, 10, 1);
         }
         Print(std::to_string(pressedKeys.size()), 0, 10, 10, 1);
-       
+        DrawMap(map,0,0,0,0,20,20,2);
         
         //std::cout << "j";
     }

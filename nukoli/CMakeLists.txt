@@ -15,10 +15,12 @@ set(NUKOLI_SRC
     src/Koge.cpp
     src/Utils.cpp
     src/Maisi.cpp
+    src/Map.cpp
+    src/Debug.cpp
 )
 
 # Create a static library from sources only
-add_library(Nukoli STATIC ${NUKOLI_SRC} "src/Saisa.cpp" "include/Utils.h")
+add_library(Nukoli STATIC ${NUKOLI_SRC} "src/Saisa.cpp" "include/Utils.h" "include/Map.h" "include/Debug.h")
 
 # Include headers
 target_include_directories(Nukoli PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
