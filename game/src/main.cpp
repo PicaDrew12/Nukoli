@@ -97,7 +97,7 @@ class TestGame : public Game {
             Print("Collision", 0, 10, 10, 1);
         }
         Print(std::to_string(pressedKeys.size()), 0, 10, 10, 1);
-        DrawMap(map,0,0,0,0,20,20,2);
+        // DrawMap(map,0,0,0,0,20,20,2);
         
         //std::cout << "j";
     }
