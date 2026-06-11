@@ -88,6 +88,8 @@ class TestGame : public Game {
 
 
 
+
+
         ClearFrameBuffer();
         DrawSquare(s1);
         DrawBoundingBox(box);
