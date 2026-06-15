@@ -4,6 +4,7 @@
 
 
 void DrawPixel(int x, int y, uint8_t color);
+uint8_t GetPixel(int x, int y);
 void DrawPixelAbsolute(int x, int y, uint8_t color);
 
 void DrawSprite(Sprite& sprite,int x, int y, int scale=1, bool flipped = false);

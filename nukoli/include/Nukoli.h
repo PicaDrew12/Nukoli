@@ -13,6 +13,7 @@
 #include "Maisi.h"
 #include "Debug.h"
 #include "Map.h"
+#include "Save.h"
 
 
 void init();

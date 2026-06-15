@@ -56,7 +56,7 @@ void DrawMap(Map& map, int x, int y, int mapX, int mapY, int width, int height,i
 				//DrawPixel(i, j, 8);
 
 				Sprite sp = map.spriteSheet->getSpriteByIndex(index);
-				DrawSprite(sp, x + ctw * 8*scale, cth * 8*scale,scale);
+				DrawSprite(sp, x + ctw * 8*scale, y+cth * 8*scale,scale);
 
 				
 			}

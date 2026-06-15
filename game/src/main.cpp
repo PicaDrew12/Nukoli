@@ -30,18 +30,32 @@ BoundingBox box(100, 100, 5, 5);
 Square s2(100, 100, 50);
 BoundingBox box2(100, 100, 5, 5);
 class TestGame : public Game {
+public:
     SpriteSheet ss;
     
     Map map;
   
     void Start() override {
+        initAudio();
+        SoundSource ado;
+        ado.loadFromFile("use.ns");
+
         Sprite sp;
+
         ss.loadFromFile("ss.ss");
         map.spriteSheet = &ss;
         map.loadFromFile("map.map");
 
         //Debug::Log(map);
-
+        /////////
+        // SaveValue(76,"level");
+        // // SaveValue(false,"isDead");
+        // // SaveValue(std::string("TEST VUN K"),"name");
+        // SaveDataFile();
+        LoadDataFile();
+        for (auto element:saveData) {
+            Debug::Log(element.second.data);
+        }
     }
     
     void Update() override {
@@ -98,9 +112,12 @@ class TestGame : public Game {
         if (isColliding(box, box2)) {
             Print("Collision", 0, 10, 10, 1);
         }
+
+        DrawMap(map,0,0,0,0,20,20,2);
         Print(std::to_string(pressedKeys.size()), 0, 10, 10, 1);
-        // DrawMap(map,0,0,0,0,20,20,2);
-        
+
+
+
         //std::cout << "j";
     }
 };

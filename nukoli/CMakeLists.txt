@@ -17,6 +17,8 @@ set(NUKOLI_SRC
     src/Maisi.cpp
     src/Map.cpp
     src/Debug.cpp
+        include/Save.h
+        src/Save.cpp
 )
 
 # Create a static library from sources only

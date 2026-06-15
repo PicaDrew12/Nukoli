@@ -5,6 +5,8 @@ void MoveCamera(int x, int y) {
 	cameraY = y;
 }
 
+
+
 void DrawPixel(int x, int y, uint8_t color)
 {
 	x -= cameraX;
@@ -17,6 +19,10 @@ void DrawPixel(int x, int y, uint8_t color)
 		return;
 
 	frameBuffer[y * WIDTH + x] = color;
+}
+
+uint8_t GetPixel(int x, int y) {
+	return frameBuffer[y * WIDTH + x];
 }
 
 void DrawPixelAbsolute(int x, int y, uint8_t color)
