@@ -31,14 +31,18 @@ Square s2(100, 100, 50);
 BoundingBox box2(100, 100, 5, 5);
 class TestGame : public Game {
 public:
+
     SpriteSheet ss;
     
     Map map;
-  
+
+    SoundSource ado;
     void Start() override {
-        initAudio();
-        SoundSource ado;
+
+
         ado.loadFromFile("use.ns");
+        initAudio();
+        ado.play();
 
         Sprite sp;
 
