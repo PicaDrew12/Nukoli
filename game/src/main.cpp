@@ -40,6 +40,8 @@ public:
     void Start() override {
 
 
+
+
         ado.loadFromFile("use.ns");
         initAudio();
         ado.play();
