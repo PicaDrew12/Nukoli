@@ -88,7 +88,7 @@ Sprite CompositeSprite::getTilebyCoord(int x, int y) {
 }
 
 void CompositeSprite::loadFromFile(std::string filename) {
-    if (!canOpenFile(filename)) {
+    if (!canOpenFile(assetsFolder + filename)) {
         Debug::Error("Can't open file: ", filename);
         
     }

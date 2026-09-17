@@ -54,6 +54,8 @@ void DrawPixelAbsolute(int x, int y, uint8_t color)
 //}
 
 void DrawSprite(Sprite& sprite, int x, int y, int scale, bool flipped) {
+
+
 	for (int i = 0; i < sprite.height * scale /*&& y + i < HEIGHT*/; i++) {
 		int spriteRow = i / scale;
 		for (int j = 0; j < sprite.width * scale; j++) {
@@ -64,6 +66,115 @@ void DrawSprite(Sprite& sprite, int x, int y, int scale, bool flipped) {
 		}
 	}
 }
+
+
+// void DrawSpriteRotate(int angle,Sprite& sprite, int x, int y, int scale, bool flipped) {
+// 	if (angle == 90) {
+//
+// 		for (int i = 0; i < sprite.height * scale ; i++) {
+//
+// 			for (int j = 0; j < sprite.width * scale; j++) {
+// 				int spriteCol = i / scale;
+// 				int spriteRow = j / scale;
+// 				if (flipped) spriteCol = sprite.width - 1 - spriteCol;
+// 				uint8_t spriteColor = sprite.data[(7- spriteRow )* sprite.width + spriteCol];
+// 				DrawPixel(x + j, y + i, spriteColor);
+// 			}
+// 		}
+// 	}if (angle == 270) {
+//
+// 		for (int i = 0; i < sprite.height * scale ; i++) {
+//
+// 			for (int j = 0; j < sprite.width * scale; j++) {
+// 				int spriteCol = i / scale;
+// 				int spriteRow = j / scale;
+// 				if (flipped) spriteCol = sprite.width - 1 - spriteCol;
+// 				uint8_t spriteColor = sprite.data[(spriteRow )* sprite.width + (7-spriteCol)];
+// 				DrawPixel(x + j, y + i, spriteColor);
+// 			}
+// 		}
+// 	}
+// 	if (angle == 0) {
+// 		for (int i = 0; i < sprite.height * scale /*&& y + i < HEIGHT*/; i++) {
+// 			int spriteRow = i / scale;
+// 			for (int j = 0; j < sprite.width * scale; j++) {
+// 				int spriteCol = j / scale;
+// 				if (flipped) spriteCol = sprite.width - 1 - spriteCol;
+// 				uint8_t spriteColor = sprite.data[spriteRow * sprite.width + spriteCol];
+// 				DrawPixel(x + j, y + i, spriteColor);
+// 			}
+// 		}
+// 	}if (angle == 180) {
+// 		for (int i = 0; i < sprite.height * scale /*&& y + i < HEIGHT*/; i++) {
+// 			int spriteRow = i / scale;
+// 			for (int j = 0; j < sprite.width * scale; j++) {
+// 				int spriteCol = j / scale;
+// 				if (flipped) spriteCol = sprite.width - 1 - spriteCol;
+// 				uint8_t spriteColor = sprite.data[(7-spriteRow) * sprite.width + (7-spriteCol)];
+// 				DrawPixel(x + j, y + i, spriteColor);
+// 			}
+// 		}
+// 	}
+//
+//
+//
+// }
+
+void DrawSpriteRotate(int angle,Sprite& sprite, int x, int y, int scale, bool flipped) {
+
+
+
+	if (angle == 90) {
+
+		for (int i = 0; i < sprite.height * scale ; i++) {
+
+			for (int j = 0; j < sprite.width * scale; j++) {
+				int spriteCol = i / scale;
+				int spriteRow = j / scale;
+				if (flipped) spriteCol = sprite.width - 1 - spriteCol;
+				uint8_t spriteColor = sprite.data[(7- spriteRow )* sprite.width + spriteCol];
+				DrawPixel(x + j, y + i, spriteColor);
+			}
+		}
+	}if (angle == 270) {
+
+		for (int i = 0; i < sprite.height * scale ; i++) {
+
+			for (int j = 0; j < sprite.width * scale; j++) {
+				int spriteCol = i / scale;
+				int spriteRow = j / scale;
+				int srcCol = flipped ? spriteCol : (sprite.width - 1 - spriteCol);
+				uint8_t spriteColor = sprite.data[(spriteRow )* sprite.width + (srcCol)];
+				DrawPixel(x + j, y + i, spriteColor);
+			}
+		}
+	}
+	if (angle == 0) {
+		for (int i = 0; i < sprite.height * scale /*&& y + i < HEIGHT*/; i++) {
+			int spriteRow = i / scale;
+			for (int j = 0; j < sprite.width * scale; j++) {
+				int spriteCol = j / scale;
+				if (flipped) spriteCol = sprite.width - 1 - spriteCol;
+				uint8_t spriteColor = sprite.data[spriteRow * sprite.width + spriteCol];
+				DrawPixel(x + j, y + i, spriteColor);
+			}
+		}
+	}if (angle == 180) {
+		for (int i = 0; i < sprite.height * scale /*&& y + i < HEIGHT*/; i++) {
+			int spriteRow = i / scale;
+			for (int j = 0; j < sprite.width * scale; j++) {
+				int spriteCol = j / scale;
+				int srcCol = flipped ? spriteCol : (sprite.width - 1 - spriteCol);
+				uint8_t spriteColor = sprite.data[(7-spriteRow) * sprite.width + (srcCol)];
+				DrawPixel(x + j, y + i, spriteColor);
+			}
+		}
+	}
+
+
+
+}
+
 
 
 void DrawSprite(CompositeSprite& compositeSprite, int x, int y, int scale, bool flipped) {

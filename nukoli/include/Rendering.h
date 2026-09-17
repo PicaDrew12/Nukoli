@@ -15,6 +15,8 @@ void ClearFrameBuffer(uint8_t color = t);
 
 //PRIMITIVES
 
+
+void DrawSpriteRotate(int angle,Sprite& sprite, int x, int y, int scale, bool flipped) ;
 void DrawRectangle(int x, int y, int width, int height,uint8_t color ,bool fill = true, int thickness=1);
 void DrawLine(int x1, int y1, int x2, int y2, uint8_t color, int thickness = 1);
 void DrawCircle(int xc, int yc, int r, uint8_t color, int thickness = 1);

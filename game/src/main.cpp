@@ -1,23 +1,29 @@
 ﻿#include "Nukoli.h"
 
 SoundSource soundSource;
-
+int angle =0;
+bool flip = false;
 void Pause() {
-    soundSource.pause();
+    angle = 0;
 }
 
 void Resume() {
-    soundSource.resume();
+    angle = 180;
 }
 
 class TestGame : public Game {
 public:
+    CompositeSprite chick;
+    Sprite small;
+
 
     void Start() override {
         initAudio();
-
+        chick.loadFromFile("chick.cas");
+        small.loadFromFile("f.sp");
         soundSource.loadFromFile("Fire_emblem_hot_talk.ns");
         soundSource.play();
+        RepeatForever(1,[&](){flip = !flip;Debug::Log(flip);});
 
 
 
@@ -25,15 +31,25 @@ public:
     }
 
     void Update() override {
-        if (isKeyPressed(Key::Space)) {
-            Pause();
-        }else if (isKeyPressed(Key::R)) {
-            Resume();
+        if (isKeyPressed(Key::W)) {
+            angle = 0;
+        }else if (isKeyPressed(Key::D)) {
+            angle = 90;
         }
+        else if (isKeyPressed(Key::S)) {
+            angle = 180;
+        }
+        else if (isKeyPressed(Key::A)) {
+            angle = 270;
+        }
+
+
     }
 
     void Draw() override {
-    ClearFrameBuffer(0);
+    ClearFrameBuffer(2);
+        DrawSpriteRotate(angle,small,50,50,5,flip);
+        DrawSprite(chick,0,0,3,flip);
 
 
     }
