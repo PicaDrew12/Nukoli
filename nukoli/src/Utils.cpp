@@ -13,6 +13,8 @@ float GetRandFloat(int min, int max) {
 	return x;
 }
 
+
+
 BoundingBox::BoundingBox() {
 	x = 0;
 	y = 0;
