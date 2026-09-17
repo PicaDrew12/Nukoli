@@ -193,3 +193,37 @@ void DrawRectangle(int x, int y, int width, int height, uint8_t color, bool fill
 	
 }
 
+
+void drawCircle(int xc, int yc, int x, int y, uint8_t color){
+	DrawPixel(xc+x, yc+y, color);
+	DrawPixel(xc-x, yc+y, color);
+	DrawPixel(xc+x, yc-y, color);
+	DrawPixel(xc-x, yc-y, color);
+	DrawPixel(xc+y, yc+x, color);
+	DrawPixel(xc-y, yc+x, color);
+	DrawPixel(xc+y, yc-x, color);
+	DrawPixel(xc-y, yc-x, color);
+}
+void DrawCircle(int xc, int yc, int radius, uint8_t color, int thickness) {
+
+	int r_out = radius;
+	int r_in = std::max(0, radius - thickness);
+	int rOut2 = r_out * r_out;
+	int rIn2  = r_in * r_in;
+
+	for (int y = -r_out; y <= r_out; y++) {
+		for (int x = -r_out; x <= r_out; x++) {
+			int d2 = x * x + y * y;
+			if (d2 <= rOut2 && d2 >= rIn2) {
+				DrawPixel(xc + x, yc + y, color);
+			}
+		}
+	}
+}
+
+
+void DrawFillCircle(int xc, int yc, int radius, uint8_t color) {
+	DrawCircle(xc,yc,radius,color,radius);
+}
+
+

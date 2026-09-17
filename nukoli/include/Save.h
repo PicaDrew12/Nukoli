@@ -25,3 +25,11 @@ void SaveDataFile();
 
 int GetIntValue(std::string name);
 void LoadDataFile();
+
+//LOADERS
+
+int LoadDataInt(const std::string& name);
+float LoadDataFloat(const std::string& name);
+std::string& LoadDataString(const std::string& name);
+bool LoadDataBool(const std::string& name);
+char LoadDataChar(const std::string& name);

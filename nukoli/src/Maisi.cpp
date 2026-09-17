@@ -182,11 +182,42 @@ void SoundSource::loadFromFile(std::string filename) {
 
 }
 
+// sq1 -1
+// sq2 -2
+// triangle -3
+// sawTooth = 4
+// noise =5
+
+void SoundSource::incrementNoteIndex(int index) {
+	if (!isPaused) {
+		if (index == 1) {
+			square1NoteIndex++;
+
+		}else if (index ==2) {
+			square2NoteIndex++;
+		}
+		else if (index ==3) {
+			triangleNoteIndex++;
+		}
+		else if (index == 4) {
+			sawToothNoteIndex ++;
+		}
+		else if (index == 5) {
+			noiseNoteIndex++;
+		}
+	}
+
+}
+
 void SoundSource::square1NextNote() {
+	if (isPaused) {
+		return;
+	}
 	if (square1NoteIndex < squareChannel1Notes.size()) {
 		Note noteToPlay = squareChannel1Notes[square1NoteIndex];
 		playNote(noteToPlay);
-		square1NoteIndex++;
+		// square1NoteIndex++;
+		incrementNoteIndex(1);
 		RunAfter(noteToPlay.duration + noteToPlay.delay, [this]() { square1NextNote(); });
 	}
 	else {
@@ -195,10 +226,14 @@ void SoundSource::square1NextNote() {
 }
 
 void SoundSource::square2NextNote() {
+	if (isPaused) {
+		return;
+	}
 	if (square2NoteIndex < squareChannel2Notes.size()) {
 		Note noteToPlay = squareChannel2Notes[square2NoteIndex];
 		playNote(noteToPlay);
-		square2NoteIndex++;
+		incrementNoteIndex(2);
+		// square2NoteIndex++;
 		RunAfter(noteToPlay.duration + noteToPlay.delay, [this]() { square2NextNote(); });
 	}
 	else {
@@ -208,10 +243,14 @@ void SoundSource::square2NextNote() {
 
 
 void SoundSource::triangleNextNote() {
+	if (isPaused) {
+		return;
+	}
 	if (triangleNoteIndex < triangleChannelNotes.size()) {
 		Note noteToPlay = triangleChannelNotes[triangleNoteIndex];
 		playNote(noteToPlay);
-		triangleNoteIndex++;
+		incrementNoteIndex(3);
+		// triangleNoteIndex++;
 		RunAfter(noteToPlay.duration + noteToPlay.delay, [this]() { triangleNextNote(); });
 	}
 	else {
@@ -220,10 +259,14 @@ void SoundSource::triangleNextNote() {
 }
 
 void SoundSource::sawToothNextNote() {
+	if (isPaused) {
+		return;
+	}
 	if (sawToothNoteIndex < sawToothChannelNotes.size()) {
 		Note noteToPlay = sawToothChannelNotes[sawToothNoteIndex];
 		playNote(noteToPlay);
-		sawToothNoteIndex++;
+		// sawToothNoteIndex++;
+		incrementNoteIndex(4);
 		RunAfter(noteToPlay.duration + noteToPlay.delay, [this]() { sawToothNextNote(); });
 	}
 	else {
@@ -232,10 +275,15 @@ void SoundSource::sawToothNextNote() {
 }
 
 void SoundSource::noiseNextNote() {
+	if (isPaused) {
+		return;
+	}
+
 	if (noiseNoteIndex < noiseChannelNotes.size()) {
 		Note noteToPlay = noiseChannelNotes[noiseNoteIndex];
 		playNote(noteToPlay);
-		noiseNoteIndex++;
+		// noiseNoteIndex++;
+		incrementNoteIndex(5);
 		RunAfter(noteToPlay.duration + noteToPlay.delay, [this]() { noiseNextNote(); });
 	}
 	else {
@@ -245,6 +293,7 @@ void SoundSource::noiseNextNote() {
 
 
 void SoundSource::play() {
+	isPaused = false;
 	square1NoteIndex = 0;
 	square2NoteIndex = 0;
 	triangleNoteIndex = 0;
@@ -293,4 +342,33 @@ void SoundSource::reset() {
 	triangleChannel.amplitude = 0;
 	sawToothChannel.amplitude = 0;
 	noiseChannel.amplitude = 0;
+}
+
+void SoundSource::pause() {
+	if (!isPaused) {
+		isPaused = true;
+		squareChannel1.amplitude = 0;
+		squareChannel2.amplitude = 0;
+		triangleChannel.amplitude = 0;
+		sawToothChannel.amplitude = 0;
+		noiseChannel.amplitude = 0;
+
+	}
+
+}
+
+void SoundSource::resume() {
+	if (isPaused) {
+		isPaused = false;
+		squareChannel1.amplitude = defaultAmplitude;
+		squareChannel2.amplitude = defaultAmplitude;
+		triangleChannel.amplitude = defaultAmplitude;
+		sawToothChannel.amplitude = defaultAmplitude;
+		noiseChannel.amplitude = defaultAmplitude;
+		square1NextNote();
+		square2NextNote();
+		triangleNextNote();
+		sawToothNextNote();
+		noiseNextNote();
+	}
 }

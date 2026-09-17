@@ -17,4 +17,6 @@ void ClearFrameBuffer(uint8_t color = t);
 
 void DrawRectangle(int x, int y, int width, int height,uint8_t color ,bool fill = true, int thickness=1);
 void DrawLine(int x1, int y1, int x2, int y2, uint8_t color, int thickness = 1);
+void DrawCircle(int xc, int yc, int r, uint8_t color, int thickness = 1);
+void DrawFillCircle(int xc, int yc, int radius, uint8_t color);
 //void DrawRectangle(int x, int y,int radius,uint8_t,  bool fill = true);

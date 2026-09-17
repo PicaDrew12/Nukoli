@@ -1,5 +1,7 @@
 #include "Save.h"
 
+#include <map>
+
 #include "Debug.h"
 //DRAFT, WILL OPTIMIZE LATER
 std::unordered_map<std::string,SaveEntry> saveData;
@@ -63,6 +65,7 @@ SaveType stringToType(const std::string& str) {
 
 
 void SaveDataFile() {
+
     std::ofstream saveFile("saveFile.sf");for (auto element : saveData) {
         if (element.second.type == SaveType::STRING) {
             saveFile << "STRING "
@@ -82,6 +85,12 @@ void SaveDataFile() {
 }
 
 void LoadDataFile() {
+    std::string name = "saveFile.sf";
+    std::ifstream f(name.c_str());
+    if (!f.good()) {
+        std::ofstream saveFile;
+        saveFile.open("saveFile.sf");
+    }
     std::ifstream saveFile("saveFile.sf");
     std::string type;
     while (saveFile>>type) {
@@ -114,6 +123,15 @@ void LoadDataFile() {
 
 
         }
+
+        if (type=="CHAR") {
+            std::string name;
+            saveFile>>name;
+            char value;
+            saveFile>>value;
+            SaveValue(value,name);
+        }
+
         if (type == "STRING") {
             std::string name;
             saveFile>>name;
@@ -134,4 +152,35 @@ void LoadDataFile() {
             }
         }
     }
+}
+
+//Loaders
+
+SaveEntry& FindSaveEntry(const std::string& name) {
+    for (auto& entry: saveData) {
+        if (entry.first == name) {
+            return entry.second;
+        }
+    }
+    Debug::Error("No save variable with name:'"+name+"'");
+}
+
+int LoadDataInt(const std::string& name) {
+    return std::stoi(FindSaveEntry(name).data);
+}
+
+float LoadDataFloat(const std::string& name) {
+    return std::stof(FindSaveEntry(name).data);
+}
+
+char LoadDataChar(const std::string& name) {
+    return FindSaveEntry(name).data[0];
+}
+
+std::string& LoadDataString(const std::string& name) {
+    return FindSaveEntry(name).data;
+}
+
+bool LoadDataBool(const std::string& name) {
+    return FindSaveEntry(name).data == "true";
 }

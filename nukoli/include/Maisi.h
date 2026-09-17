@@ -232,6 +232,8 @@ public:
     int sawToothNoteIndex;
     int noiseNoteIndex;
 
+    bool isPaused;
+
     void square1NextNote();
     void square2NextNote();
     void triangleNextNote();
@@ -239,6 +241,9 @@ public:
     void noiseNextNote();
     void loadFromFile(std::string filename);
     void play();
+    void pause();
+    void resume();
+    void incrementNoteIndex(int index);
     void stop();
     void reset();
 };
