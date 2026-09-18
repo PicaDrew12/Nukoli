@@ -224,10 +224,11 @@ void exec(Game& game) {
         accumulator += dt;
         while (accumulator >= timestep)
         {
+        	poolKeys();
             UpdateAllTimers();
             game.Update();
             accumulator -= timestep;
-            poolKeys();
+            // poolKeys();
         }
 
         window.clear(sf::Color::Black);

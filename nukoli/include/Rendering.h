@@ -10,13 +10,17 @@ void DrawPixelAbsolute(int x, int y, uint8_t color);
 void DrawSprite(Sprite& sprite,int x, int y, int scale=1, bool flipped = false);
 void DrawSprite(CompositeSprite& compositeSprite, int x, int y, int scale = 1, bool flipped = false);
 void DrawSprite(AnimatedCompositeSprite& animatedCompositeSprite, int x, int y, int scale = 1, bool flipped = false);
+void DrawSpriteRotate(AnimatedCompositeSprite& animatedCompositeSprite, int x, int y, int scale = 1, bool flipH = false,bool flipV=false, int angle=0);
 
 void ClearFrameBuffer(uint8_t color = t);
 
-//PRIMITIVES
+
+//ROTATION
+void DrawSpriteRotate(int angle,Sprite& sprite, int x, int y, int scale, bool flipH, bool flipV) ;
+void DrawSpriteRotate(CompositeSprite& compositeSprite, int x, int y, int scale, bool flipH, bool flipV,int angle);
 
 
-void DrawSpriteRotate(int angle,Sprite& sprite, int x, int y, int scale, bool flipped) ;
+//PRIMTIVES
 void DrawRectangle(int x, int y, int width, int height,uint8_t color ,bool fill = true, int thickness=1);
 void DrawLine(int x1, int y1, int x2, int y2, uint8_t color, int thickness = 1);
 void DrawCircle(int xc, int yc, int r, uint8_t color, int thickness = 1);

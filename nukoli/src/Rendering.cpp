@@ -67,72 +67,29 @@ void DrawSprite(Sprite& sprite, int x, int y, int scale, bool flipped) {
 	}
 }
 
+void DrawSpriteRotate(int angle,Sprite& sprite, int x, int y, int scale, bool flipH, bool flipV) {
 
-// void DrawSpriteRotate(int angle,Sprite& sprite, int x, int y, int scale, bool flipped) {
-// 	if (angle == 90) {
-//
-// 		for (int i = 0; i < sprite.height * scale ; i++) {
-//
-// 			for (int j = 0; j < sprite.width * scale; j++) {
-// 				int spriteCol = i / scale;
-// 				int spriteRow = j / scale;
-// 				if (flipped) spriteCol = sprite.width - 1 - spriteCol;
-// 				uint8_t spriteColor = sprite.data[(7- spriteRow )* sprite.width + spriteCol];
-// 				DrawPixel(x + j, y + i, spriteColor);
-// 			}
-// 		}
-// 	}if (angle == 270) {
-//
-// 		for (int i = 0; i < sprite.height * scale ; i++) {
-//
-// 			for (int j = 0; j < sprite.width * scale; j++) {
-// 				int spriteCol = i / scale;
-// 				int spriteRow = j / scale;
-// 				if (flipped) spriteCol = sprite.width - 1 - spriteCol;
-// 				uint8_t spriteColor = sprite.data[(spriteRow )* sprite.width + (7-spriteCol)];
-// 				DrawPixel(x + j, y + i, spriteColor);
-// 			}
-// 		}
-// 	}
-// 	if (angle == 0) {
-// 		for (int i = 0; i < sprite.height * scale /*&& y + i < HEIGHT*/; i++) {
-// 			int spriteRow = i / scale;
-// 			for (int j = 0; j < sprite.width * scale; j++) {
-// 				int spriteCol = j / scale;
-// 				if (flipped) spriteCol = sprite.width - 1 - spriteCol;
-// 				uint8_t spriteColor = sprite.data[spriteRow * sprite.width + spriteCol];
-// 				DrawPixel(x + j, y + i, spriteColor);
-// 			}
-// 		}
-// 	}if (angle == 180) {
-// 		for (int i = 0; i < sprite.height * scale /*&& y + i < HEIGHT*/; i++) {
-// 			int spriteRow = i / scale;
-// 			for (int j = 0; j < sprite.width * scale; j++) {
-// 				int spriteCol = j / scale;
-// 				if (flipped) spriteCol = sprite.width - 1 - spriteCol;
-// 				uint8_t spriteColor = sprite.data[(7-spriteRow) * sprite.width + (7-spriteCol)];
-// 				DrawPixel(x + j, y + i, spriteColor);
-// 			}
-// 		}
-// 	}
-//
-//
-//
-// }
-
-void DrawSpriteRotate(int angle,Sprite& sprite, int x, int y, int scale, bool flipped) {
-
-
+	if (angle == 0) {
+		for (int i = 0; i < sprite.height * scale; i++) {
+			int spriteRow = i / scale;
+			if (flipV) spriteRow = sprite.height - 1 - spriteRow;
+			for (int j = 0; j < sprite.width * scale; j++) {
+				int spriteCol = j / scale;
+				if (flipH) spriteCol = sprite.width - 1 - spriteCol;
+				uint8_t spriteColor = sprite.data[spriteRow * sprite.width + spriteCol];
+				DrawPixel(x + j, y + i, spriteColor);
+			}
+		}
+	}
 
 	if (angle == 90) {
-
-		for (int i = 0; i < sprite.height * scale ; i++) {
-
+		for (int i = 0; i < sprite.height * scale; i++) {
 			for (int j = 0; j < sprite.width * scale; j++) {
 				int spriteCol = i / scale;
 				int spriteRow = j / scale;
-				if (flipped) spriteCol = sprite.width - 1 - spriteCol;
-				uint8_t spriteColor = sprite.data[(7- spriteRow )* sprite.width + spriteCol];
+				if (flipH) spriteCol = sprite.width - 1 - spriteCol;
+				int srcRow = flipV ? spriteRow : (sprite.height - 1 - spriteRow);
+				uint8_t spriteColor = sprite.data[srcRow * sprite.width + spriteCol];
 				DrawPixel(x + j, y + i, spriteColor);
 			}
 		}
@@ -143,29 +100,21 @@ void DrawSpriteRotate(int angle,Sprite& sprite, int x, int y, int scale, bool fl
 			for (int j = 0; j < sprite.width * scale; j++) {
 				int spriteCol = i / scale;
 				int spriteRow = j / scale;
-				int srcCol = flipped ? spriteCol : (sprite.width - 1 - spriteCol);
+				if (flipV) spriteRow = sprite.height - 1 - spriteRow;
+				int srcCol = flipH ? spriteCol : (sprite.width - 1 - spriteCol);
 				uint8_t spriteColor = sprite.data[(spriteRow )* sprite.width + (srcCol)];
 				DrawPixel(x + j, y + i, spriteColor);
 			}
 		}
 	}
-	if (angle == 0) {
-		for (int i = 0; i < sprite.height * scale /*&& y + i < HEIGHT*/; i++) {
+	if (angle == 180) {
+		for (int i = 0; i < sprite.height * scale; i++) {
 			int spriteRow = i / scale;
 			for (int j = 0; j < sprite.width * scale; j++) {
 				int spriteCol = j / scale;
-				if (flipped) spriteCol = sprite.width - 1 - spriteCol;
-				uint8_t spriteColor = sprite.data[spriteRow * sprite.width + spriteCol];
-				DrawPixel(x + j, y + i, spriteColor);
-			}
-		}
-	}if (angle == 180) {
-		for (int i = 0; i < sprite.height * scale /*&& y + i < HEIGHT*/; i++) {
-			int spriteRow = i / scale;
-			for (int j = 0; j < sprite.width * scale; j++) {
-				int spriteCol = j / scale;
-				int srcCol = flipped ? spriteCol : (sprite.width - 1 - spriteCol);
-				uint8_t spriteColor = sprite.data[(7-spriteRow) * sprite.width + (srcCol)];
+				int srcRow = flipV ? spriteRow : (sprite.height - 1 - spriteRow);
+				int srcCol = flipH ? spriteCol : (sprite.width - 1 - spriteCol);
+				uint8_t spriteColor = sprite.data[srcRow * sprite.width + srcCol];
 				DrawPixel(x + j, y + i, spriteColor);
 			}
 		}
@@ -189,20 +138,90 @@ void DrawSprite(CompositeSprite& compositeSprite, int x, int y, int scale, bool 
 			DrawSprite(currentSprite, newX, newY,scale,flipped);
 		}
 	}
-}
-void DrawSprite2(AnimatedCompositeSprite& animatedCompositeSprite, int x, int y, int scale, bool flipped) {
-	for (int i = 0; i < animatedCompositeSprite.tilesHigh; i++) {
-		for (int j = 0; j < animatedCompositeSprite.tilesWide; j++) {
-			Sprite currentSprite = animatedCompositeSprite.getTilebyCoord(j, i,animatedCompositeSprite.currentFrame);
-			int tileCol = j;
-			if (flipped) tileCol = animatedCompositeSprite.tilesWide - 1 - tileCol;
-			int newX = x + tileCol * 8*scale;
-			int newY = y + i * 8*scale;
 
-			DrawSprite(currentSprite, newX, newY,scale,flipped);
+}
+//col is j row is i
+void DrawSpriteRotate(CompositeSprite& compositeSprite, int x, int y, int scale, bool flipH, bool flipV,int angle) {
+	if (angle==0){
+		for (int i = 0; i < compositeSprite.tilesHigh; i++) {
+		for (int j = 0; j < compositeSprite.tilesWide; j++) {
+			Sprite currentSprite = compositeSprite.getTilebyCoord(j, i);
+			int tileCol = j;
+			int tileRow = i;
+			if (flipH) tileCol = compositeSprite.tilesWide - 1 - tileCol;
+			if (flipV) tileRow = compositeSprite.tilesHigh - 1 - tileRow;
+			int newX = x + tileCol * 8*scale;
+			int newY = y + tileRow * 8*scale;
+
+			DrawSpriteRotate(angle,currentSprite, newX, newY,scale,flipH,flipV);
+		}
+	}
+	}
+	else if (angle == 90) {
+		for (int i = 0; i < compositeSprite.tilesWide; i++) {
+			for (int j = 0; j < compositeSprite.tilesHigh; j++) {
+
+				int tileCol = i;
+				int tileRow = j;
+				if (flipH) tileCol = compositeSprite.tilesWide - 1 - tileCol;
+				// if (flipV) tileRow = compositeSprite.tilesHigh - 1 - tileRow;
+				int srcRow = flipV ? tileRow : (compositeSprite.tilesHigh -1 - tileRow);
+				int newX = x + j * 8*scale;
+				int newY = y + i* 8*scale;
+				Sprite currentSprite = compositeSprite.getTilebyCoord(tileCol, srcRow);
+				DrawSpriteRotate(angle,currentSprite, newX, newY,scale,flipH,flipV);
+			}
+		}
+	}
+
+	if (angle==180) {
+		for (int i = 0; i < compositeSprite.tilesHigh; i++) {
+			for (int j = 0; j < compositeSprite.tilesWide; j++) {
+
+				int tileCol = j;
+				int tileRow = i;
+				// if (flipH) tileCol = compositeSprite.tilesWide - 1 - tileCol;
+				// if (flipV) tileRow = compositeSprite.tilesHigh - 1 - tileRow;
+				int srcRow = flipV ? tileRow : (compositeSprite.tilesHigh - 1 - tileRow);
+				int srcCol = flipH ? tileCol : (compositeSprite.tilesWide - 1 - tileCol);
+				int newX = x + tileCol * 8*scale;
+				int newY = y + tileRow * 8*scale;
+				Sprite currentSprite = compositeSprite.getTilebyCoord(srcCol, srcRow);
+				DrawSpriteRotate(angle,currentSprite, newX, newY,scale,flipH,flipV);
+			}
+		}
+	}
+	if (angle==270) {
+		for (int i = 0; i < compositeSprite.tilesWide; i++) {
+			for (int j = 0; j < compositeSprite.tilesHigh; j++) {
+				// Sprite currentSprite = compositeSprite.getTilebyCoord(j, i);
+				int tileCol = i;
+				int tileRow = j;
+				// if (flipH) tileCol = compositeSprite.tilesWide - 1 - tileCol;
+				int srcCol = flipH ? tileCol : (compositeSprite.tilesWide - 1 - tileCol);
+				if (flipV) tileRow = compositeSprite.tilesHigh - 1 - tileRow;
+
+				int newX = x + j * 8*scale;
+				int newY = y + i* 8*scale;
+				Sprite currentSprite = compositeSprite.getTilebyCoord(srcCol, tileRow);
+				DrawSpriteRotate(angle,currentSprite, newX, newY,scale,flipH,flipV);
+			}
 		}
 	}
 }
+// void DrawSprite2(AnimatedCompositeSprite& animatedCompositeSprite, int x, int y, int scale, bool flipped) {
+// 	for (int i = 0; i < animatedCompositeSprite.tilesHigh; i++) {
+// 		for (int j = 0; j < animatedCompositeSprite.tilesWide; j++) {
+// 			Sprite currentSprite = animatedCompositeSprite.getTilebyCoord(j, i,animatedCompositeSprite.currentFrame);
+// 			int tileCol = j;
+// 			if (flipped) tileCol = animatedCompositeSprite.tilesWide - 1 - tileCol;
+// 			int newX = x + tileCol * 8*scale;
+// 			int newY = y + i * 8*scale;
+//
+// 			DrawSprite(currentSprite, newX, newY,scale,flipped);
+// 		}
+// 	}
+// }
 
 void DrawSprite(AnimatedCompositeSprite& sprite, int posX, int posY, int scale, bool flipped)
 {
@@ -236,8 +255,160 @@ void DrawSprite(AnimatedCompositeSprite& sprite, int posX, int posY, int scale, 
         int drawX = posX + spriteX * scale;
         int drawY = posY + spriteY * scale;
 
-        DrawPixel(drawX, drawY, idx);
+    	for (int dy = 0; dy < scale; dy++)
+    		for (int dx = 0; dx < scale; dx++)
+    			DrawPixel(drawX + dx, drawY + dy, idx);
     }
+}
+
+
+void DrawSpriteRotate(AnimatedCompositeSprite& sprite, int posX, int posY, int scale, bool flipH ,bool flipV, int angle)
+{
+	angle = ((angle % 360) + 360) % 360;
+    int frameSize = sprite.width * sprite.height;
+    int start = frameSize * sprite.currentFrame;
+
+    int tilesWide = sprite.tilesWide;
+	if (angle == 0) {
+		for (int local = 0; local < frameSize; local++)
+		{
+			int idx = sprite.data[start + local];
+
+			if (idx == 16)
+				continue;
+
+			int tileIndex = local / 64;
+			int inTile = local % 64;
+
+			int tileX = tileIndex % tilesWide;
+			int tileY = tileIndex / tilesWide;
+
+			int px = inTile % 8;
+			int py = inTile / 8;
+
+			int spriteX = tileX * 8 + px;
+			int spriteY = tileY * 8 + py;
+
+			if (flipH)
+				spriteX = sprite.width - 1 - spriteX;
+			if (flipV)
+				spriteY = sprite.height - 1 - spriteY;
+
+			int drawX = posX + spriteX * scale;
+			int drawY = posY + spriteY * scale;
+
+			for (int dy = 0; dy < scale; dy++)
+				for (int dx = 0; dx < scale; dx++)
+					DrawPixel(drawX + dx, drawY + dy, idx);
+		}
+	}
+	if (angle == 90) {
+		for (int local = 0; local < frameSize; local++)
+		{
+			int idx = sprite.data[start + local];
+
+			if (idx == 16)
+				continue;
+
+			int tileIndex = local / 64;
+			int inTile = local % 64;
+
+			int tileX = tileIndex % tilesWide;
+			int tileY = tileIndex / tilesWide;
+
+			int px = inTile % 8;
+			int py = inTile / 8;
+
+			int srcX = tileX * 8 + px;
+			int srcY = tileY * 8 + py;
+
+			int spriteX = (sprite.height - 1) - srcY;
+			int spriteY = srcX;
+
+			if (flipH)
+				spriteX = sprite.height - 1 - spriteX;
+			if (flipV)
+				spriteY = sprite.width - 1 - spriteY;
+			int drawX = posX + spriteX * scale;
+			int drawY = posY + spriteY * scale;
+
+			for (int dy = 0; dy < scale; dy++)
+				for (int dx = 0; dx < scale; dx++)
+					DrawPixel(drawX + dx, drawY + dy, idx);
+		}
+	}
+	if (angle == 180) {
+		for (int local = 0; local < frameSize; local++)
+		{
+			int idx = sprite.data[start + local];
+
+			if (idx == 16)
+				continue;
+
+			int tileIndex = local / 64;
+			int inTile = local % 64;
+
+			int tileX = tileIndex % tilesWide;
+			int tileY = tileIndex / tilesWide;
+
+			int px = inTile % 8;
+			int py = inTile / 8;
+
+			int srcX = tileX * 8 + px;
+			int srcY = tileY * 8 + py;
+
+			int spriteX = (sprite.width- 1) - srcX;
+			int spriteY = (sprite.height - 1) - srcY;
+
+			if (flipH)
+				spriteX = sprite.width - 1 - spriteX;
+			if (flipV)
+				spriteY = sprite.height - 1 - spriteY;
+
+			int drawX = posX + spriteX * scale;
+			int drawY = posY + spriteY * scale;
+
+			for (int dy = 0; dy < scale; dy++)
+				for (int dx = 0; dx < scale; dx++)
+					DrawPixel(drawX + dx, drawY + dy, idx);
+		}
+	}
+	if (angle == 270) {
+		for (int local = 0; local < frameSize; local++)
+		{
+			int idx = sprite.data[start + local];
+
+			if (idx == 16)
+				continue;
+
+			int tileIndex = local / 64;
+			int inTile = local % 64;
+
+			int tileX = tileIndex % tilesWide;
+			int tileY = tileIndex / tilesWide;
+
+			int px = inTile % 8;
+			int py = inTile / 8;
+
+			int srcX = tileX * 8 + px;
+			int srcY = tileY * 8 + py;
+
+			int spriteX = srcY;
+			int spriteY =(sprite.width-1) -srcX;
+
+			if (flipH)
+				spriteX = sprite.height - 1 - spriteX;
+			if (flipV)
+				spriteY = sprite.width - 1 - spriteY;
+			int drawX = posX + spriteX * scale;
+			int drawY = posY + spriteY * scale;
+
+			for (int dy = 0; dy < scale; dy++)
+				for (int dx = 0; dx < scale; dx++)
+					DrawPixel(drawX + dx, drawY + dy, idx);
+		}
+	}
+
 }
 void ClearFrameBuffer(uint8_t color) {
 	for (int i = 0; i < SIZE; i++) {
