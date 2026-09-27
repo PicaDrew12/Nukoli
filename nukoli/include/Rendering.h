@@ -7,17 +7,14 @@ void DrawPixel(int x, int y, uint8_t color);
 uint8_t GetPixel(int x, int y);
 void DrawPixelAbsolute(int x, int y, uint8_t color);
 
-void DrawSprite(Sprite& sprite,int x, int y, int scale=1, bool flipped = false);
-void DrawSprite(CompositeSprite& compositeSprite, int x, int y, int scale = 1, bool flipped = false);
-void DrawSprite(AnimatedCompositeSprite& animatedCompositeSprite, int x, int y, int scale = 1, bool flipped = false);
-void DrawSpriteRotate(AnimatedCompositeSprite& animatedCompositeSprite, int x, int y, int scale = 1, bool flipH = false,bool flipV=false, int angle=0);
+void DrawSprite(Sprite& sprite,int x, int y, int scale=1, bool flipH = false,bool flipV = false,int angle=0);
+void DrawSprite(CompositeSprite& compositeSprite, int x, int y, int scale = 1, bool flipH = false,bool flipV = false,int angle=0);
+void DrawSprite(AnimatedCompositeSprite& animatedCompositeSprite, int x, int y, int scale = 1, bool flipH = false, bool flipV = false,int angle = 0);
 
 void ClearFrameBuffer(uint8_t color = t);
 
 
-//ROTATION
-void DrawSpriteRotate(int angle,Sprite& sprite, int x, int y, int scale, bool flipH, bool flipV) ;
-void DrawSpriteRotate(CompositeSprite& compositeSprite, int x, int y, int scale, bool flipH, bool flipV,int angle);
+
 
 
 //PRIMTIVES

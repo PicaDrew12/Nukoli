@@ -1,6 +1,12 @@
 ﻿#include "Nukoli.h"
 
 SoundSource soundSource;
+SoundSource soundSource2;
+SoundSample sample(
+      Note(1, 60, 0.5f),
+      Note(2, 62, 0.25f),
+      Note(4, 64, 1.0f)
+  );
 int angle =0;
 bool flipH = false;
 bool flipV = false;
@@ -19,13 +25,20 @@ public:
 
     AnimatedCompositeSprite aba;
     void Start() override {
+
         initAudio();
+        sample.Play();
         chick.loadFromFile("chick.cas");
         small.loadFromFile("f.sp");
         aba.loadFromFile("Abacrazy.cas");
         soundSource.loadFromFile("Fire_emblem_hot_talk.ns");
-        soundSource.play();
+        soundSource2.loadFromFile("use.ns");
+
+        // soundSource.play();
+        // soundSource2.play();
+        // RunAfter(10,[&](){soundSource.pause();});
         // RepeatForever(1,[&](){flip = !flip;Debug::Log(flip);});
+        // playNoise(128,defaultAmplitude,4);
 
 
 
@@ -55,10 +68,10 @@ public:
     }
 
     void Draw() override {
-    ClearFrameBuffer(7);
-        // DrawSpriteRotate(angle,small,50,50,5,true,true);
-        // DrawSpriteRotate(chick,100,100,7,flipH, flipV,angle);
-        DrawSpriteRotate(aba,50,0,2,flipH,flipV,90);
+    ClearFrameBuffer(6);
+        DrawSprite(small,50,50,5,flipH,flipV,angle);
+        DrawSprite(chick,100,100,7,flipH, flipV,angle);
+        DrawSprite(aba,50,0,2,flipH,flipV,angle);
 
 
     }

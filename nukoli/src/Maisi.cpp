@@ -115,6 +115,24 @@ float midiToFreq(int note) {
 	return 440.0f * exp2f((note - 69) / 12.0f);
 }
 
+Note::Note(int channel, uint8_t noteNumber, float duration) {
+	this->channel = channel;
+	this->noteNumber = noteNumber;
+	this->duration = duration;
+}
+
+Note::Note() {
+	channel =0;
+	noteNumber = 0;
+	duration =0;
+}
+
+void SoundSample::Play() {
+	for (auto& notePtr: notes) {
+		playNote(*notePtr);
+	}
+}
+
 
 void playNote(Note& note) {
 	float frequency = midiToFreq(note.noteNumber);
@@ -167,6 +185,7 @@ void SoundSource::loadFromFile(std::string filename) {
 
 			}
 			else if (note.channel == 2) {
+
 				triangleChannelNotes.push_back(note);
 			}
 			else if (note.channel == 3) {

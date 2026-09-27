@@ -7,10 +7,19 @@
 #include "Global.h"
 #include<fstream>
 #include "Malia.h"
+#include<memory>
 #include <atomic>
 
 
 extern float defaultAmplitude;
+
+enum class Channels {
+    SQUARE1,
+    SQUARE2,
+    TRIANGLE,
+    SAWTOOTH,
+    NOISE
+};
 
 
 
@@ -180,6 +189,25 @@ struct Note {
     uint8_t noteNumber;
     float duration;
     float delay;
+    Note();
+    Note(int channel,uint8_t noteNumber,float duration);
+
+};
+
+
+class SoundSample {
+public:
+    std::vector<std::unique_ptr<Note>> notes;
+    template< typename... Args>
+    SoundSample(Args&&... args) {
+        notes.reserve(sizeof...(args));
+        (notes.push_back(std::make_unique<Note>(std::forward<Args>(args))),...);
+
+    }
+    void Play();
+
+
+
 
 };
 

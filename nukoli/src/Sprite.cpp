@@ -8,7 +8,7 @@ bool canOpenFile(const std::string& path) {
 }
 
 void Sprite::loadFromFile(std::string filename) {
-    if (!canOpenFile(filename)) {
+    if (!canOpenFile(assetsFolder +filename)) {
         Debug::Error("Can't open file: ", filename);
     }
 	std::ifstream fin(assetsFolder + filename);
@@ -109,7 +109,7 @@ void CompositeSprite::loadFromFile(std::string filename) {
 
 
 void AnimatedCompositeSprite::loadFromFile(std::string filename, float frameDuration, bool looping) {
-    if (!canOpenFile(filename)) {
+    if (!canOpenFile(assetsFolder +filename)) {
         Debug::Error("Can't open file: ", filename);
     }
     std::ifstream fin(assetsFolder + filename);
